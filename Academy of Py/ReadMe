@@ -1,1 +1,290 @@
+In [42]:
+# Dependencies
+import pandas as pd
 
+# Load csv files
+schools_file = 'schools_complete.csv'
+students_file = 'students_complete.csv'
+In [43]:
+# Read school file with pandas
+school_df = pd.read_csv(schools_file)
+
+# Check columns of schools data 
+school_df.columns
+
+# Rename columns in school dataset
+school_ds = school_df.rename(columns={'name' : 'School','type' : 'Type','size' : 'Size','budget' : 'Budget'})
+school.head()
+Out[43]:
+School ID	School	Type	Size	Budget
+0	0	Huang High School	District	2917	1910635
+1	1	Figueroa High School	District	2949	1884411
+2	2	Shelton High School	Charter	1761	1056600
+3	3	Hernandez High School	District	4635	3022020
+4	4	Griffin High School	Charter	1468	917500
+In [44]:
+# Read student file with pandas
+student_df = pd.read_csv(students_file)
+
+# Check columns of students data 
+student_df.columns
+
+# Rename columns in student dataset
+student_ds = student_df.rename(columns={'name' : 'Student','gender' : 'Gender','grade' : 'Grade',
+                           'school' : 'School','reading_score' : 'Reading_Score', 'math_score' : 'Math_Score'})
+student.head()
+Out[44]:
+Student ID	Student	Gender	Grade	School	Reading_Score	Math_Score
+0	0	Paul Bradley	M	9th	Huang High School	66	79
+1	1	Victor Smith	M	12th	Huang High School	94	61
+2	2	Kevin Rodriguez	M	12th	Huang High School	90	60
+3	3	Dr. Richard Scott	M	12th	Huang High School	67	58
+4	4	Bonnie Ray	F	9th	Huang High School	97	84
+In [45]:
+# Merge school and student dataframes
+smry_table = pd.merge(school_ds, student_ds, on=('School'))
+smry_table.head()
+Out[45]:
+School ID	School	Type	Size	Budget	Student ID	Student	Gender	Grade	Reading_Score	Math_Score
+0	0	Huang High School	District	2917	1910635	0	Paul Bradley	M	9th	66	79
+1	0	Huang High School	District	2917	1910635	1	Victor Smith	M	12th	94	61
+2	0	Huang High School	District	2917	1910635	2	Kevin Rodriguez	M	12th	90	60
+3	0	Huang High School	District	2917	1910635	3	Dr. Richard Scott	M	12th	67	58
+4	0	Huang High School	District	2917	1910635	4	Bonnie Ray	F	9th	97	84
+District Summary
+In [62]:
+# Find the total schools, students and budget from school dataframe
+Total_Schools = smry_table["School"].nunique()
+Total_Students = smry_table["Student ID"].nunique()
+Total_Budget = school_ds["Budget"].sum()
+
+# Find average Math and Reading score
+avg_math_score = smry_table["Math_Score"].mean()
+avg_reading_score = smry_table["Reading_Score"].mean()
+
+# Calculate the total count of passing Math, reading and overall passing count
+count_passing_math = smry_table[smry_table["Math_Score"] > 60].count()["School"]
+count_passing_reading = smry_table[smry_table["Reading_Score"] > 60].count()["School"]
+overall_passing_count = smry_table[(smry_table["Math_Score"] > 60) & (smry_table["Reading_Score"] > 60)].count()["School"]
+
+# Calculate Percentage Passing Math / Reading and overall passing both
+percent_passing_math = (count_passing_math / Total_Students) * 100
+percent_passing_reading = (count_passing_reading / Total_Students) * 100
+percent_passing_both = (overall_passing_count / Total_Students) * 100
+
+# Convert to data frame
+District_Summary = pd.DataFrame({"Total Schools":[Total_Schools], "Total Students":[Total_Students],
+                                "Total Budget":[Total_Budget], "Average Math Score":[avg_math_score],
+                                 "Average Reading Score":[avg_reading_score], "% Passing Math":percent_passing_math,
+                                 "% Passing Reading":percent_passing_reading, "Overall Passing Rate": percent_passing_both})
+
+# Data munging
+District_Summary = District_Summary[["Total Schools", "Total Students", "Total Budget", "Average Math Score",
+                                 "Average Reading Score", "% Passing Math", "% Passing Reading", "Overall Passing Rate"]]
+# District Summary Table
+District_Summary.head()
+Out[62]:
+Total Schools	Total Students	Total Budget	Average Math Score	Average Reading Score	% Passing Math	% Passing Reading	Overall Passing Rate
+0	15	39170	24649428	78.985371	81.87784	90.906306	100.0	90.906306
+School Summary
+In [61]:
+# Determine the school type
+school_types = school_ds.set_index(["School"])["Type"]
+
+# Calculate total student count per school
+student_cnt_per_school = smry_table["School"].value_counts()
+
+# Calculate Per Student Budget
+per_school_budget = smry_table.groupby(["School"]).mean()["Budget"]
+per_student_budget = per_school_budget/ student_cnt_per_school
+
+# calculate average math, reading scores and overall passing rate
+avg_math_score = smry_table.groupby(["School"]).mean()["Math_Score"]
+avg_reading_score = smry_table.groupby(["School"]).mean()["Reading_Score"]
+
+# calculate % Passing Math and % Passing Reading
+school_passing_math =  smry_table[smry_table["Math_Score"] > 60].groupby("School").count()["Student"]
+school_passing_reading =  smry_table[smry_table["Reading_Score"] > 60].groupby("School").count()["Student"]
+
+percent_passing_math = school_passing_math / per_school_counts * 100
+percent_passing_reading = school_passing_reading / per_school_counts * 100
+overall_passing_rate = (percent_passing_math + percent_passing_reading) / 2
+
+# Convert to data frame
+school_smry = pd.DataFrame({"School Type":school_types, "Total Students":per_school_counts,
+                               "Total School Budget":per_school_budget, "Per Student Budget":per_student_budget,
+                                "Average Math Score":avg_math_score, "Average Reading Score":avg_reading_score,
+                                 "% Passing Math":percent_passing_math, "% Passing Reading":percent_passing_reading,
+                                 "Overall Passing Rate":overall_passing_rate})            
+
+# Data munging
+school_smry = school_smry[["School Type","Total Students","Total School Budget","Per Student Budget",
+                                "Average Math Score","Average Reading Score","% Passing Math","% Passing Reading",
+                                 "Overall Passing Rate"]]
+
+school_smry["Total School Budget"] = school_smry["Total School Budget"].map("${:,.2f}".format)
+school_smry["Per Student Budget"] = school_smry["Per Student Budget"].map("${:,.2f}".format)
+
+# Display the data frame
+school_smry.head()
+Out[61]:
+School Type	Total Students	Total School Budget	Per Student Budget	Average Math Score	Average Reading Score	% Passing Math	% Passing Reading	Overall Passing Rate
+Bailey High School	District	4976	$3,124,928.00</td> <td>$628.00	77.048432	81.033963	87.439711	100.0	93.719855
+Cabrera High School	Charter	1858	$1,081,356.00</td> <td>$582.00	83.061895	83.975780	100.000000	100.0	100.000000
+Figueroa High School	District	2949	$1,884,411.00</td> <td>$639.00	76.711767	81.158020	86.436080	100.0	93.218040
+Ford High School	District	2739	$1,763,916.00</td> <td>$644.00	77.102592	80.746258	87.221614	100.0	93.610807
+Griffin High School	Charter	1468	$917,500.00</td> <td>$625.00	83.351499	83.816757	100.000000	100.0	100.000000
+Bottom Performing Schools (By Passing Rate)
+In [64]:
+# Bottom 5 performing schools(By passing rates)
+Bottom_Schools = school_smry.sort_values(["Overall Passing Rate"], ascending = True)
+Bottom_Schools.head(5)
+Out[64]:
+School Type	Total Students	Total School Budget	Per Student Budget	Average Math Score	Average Reading Score	% Passing Math	% Passing Reading	Overall Passing Rate
+Figueroa High School	District	2949	$1,884,411.00</td> <td>$639.00	76.711767	81.158020	86.436080	100.0	93.218040
+Rodriguez High School	District	3999	$2,547,363.00</td> <td>$637.00	76.842711	80.744686	86.446612	100.0	93.223306
+Hernandez High School	District	4635	$3,022,020.00</td> <td>$652.00	77.289752	80.934412	86.450917	100.0	93.225458
+Johnson High School	District	4761	$3,094,650.00</td> <td>$650.00	77.072464	80.966394	86.704474	100.0	93.352237
+Huang High School	District	2917	$1,910,635.00</td> <td>$655.00	76.629414	81.182722	86.835790	100.0	93.417895
+Math Scores by Grade
+In [77]:
+# Calculate math score by grade
+nineth_grade_score_m =  smry_table[smry_table["Grade"] == "9th"].groupby("School").mean()["Math_Score"]
+tenth_grade_score_m =  smry_table[smry_table["Grade"] == "10th"].groupby("School").mean()["Math_Score"]
+eleventh_grade_score_m =  smry_table[smry_table["Grade"] == "11th"].groupby("School").mean()["Math_Score"]
+twelveth_grade_score_m =  smry_table[smry_table["Grade"] == "12th"].groupby("School").mean()["Math_Score"]
+
+# Math score by grade in table form
+math_score_by_grade_df_draft = pd.DataFrame({"9th":nineth_grade_score_m, "10th":tenth_grade_score_m,
+                               "11th":eleventh_grade_score_m,"12th":twelveth_grade_score_m})            
+
+# Data munging
+math_score_by_grade_df = math_score_by_grade_df_draft[["9th", "10th", "11th", "12th"]]
+
+# Display the data frame
+math_score_by_grade_df.head()
+Out[77]:
+9th	10th	11th	12th
+School				
+Bailey High School	77.083676	76.996772	77.515588	76.492218
+Cabrera High School	83.094697	83.154506	82.765560	83.277487
+Figueroa High School	76.403037	76.539974	76.884344	77.151369
+Ford High School	77.361345	77.672316	76.918058	76.179963
+Griffin High School	82.044010	84.229064	83.842105	83.356164
+Reading Scores By Grade
+In [78]:
+# Calculate reading score by grade
+nineth_grade_score_r =  smry_table[smry_table["Grade"] == "9th"].groupby("School").mean()["Reading_Score"]
+tenth_grade_score_r =  smry_table[smry_table["Grade"] == "10th"].groupby("School").mean()["Reading_Score"]
+eleventh_grade_score_r =  smry_table[smry_table["Grade"] == "11th"].groupby("School").mean()["Reading_Score"]
+twelveth_grade_score_r =  smry_table[smry_table["Grade"] == "12th"].groupby("School").mean()["Reading_Score"]
+
+# Math score by grade in table form
+reading_score_by_grade_df_draft = pd.DataFrame({"9th":nineth_grade_score_r, "10th":tenth_grade_score_r,
+                               "11th":eleventh_grade_score_r,"12th":twelveth_grade_score_r})            
+
+# Data munging
+reading_score_by_grade_df = reading_score_by_grade_df_draft[["9th", "10th", "11th", "12th"]]
+
+# Display the data frame
+reading_score_by_grade_df.head()
+Out[78]:
+9th	10th	11th	12th
+School				
+Bailey High School	81.303155	80.907183	80.945643	80.912451
+Cabrera High School	83.676136	84.253219	83.788382	84.287958
+Figueroa High School	81.198598	81.408912	80.640339	81.384863
+Ford High School	80.632653	81.262712	80.403642	80.662338
+Griffin High School	83.369193	83.706897	84.288089	84.013699
+Scores by School Spending
+In [86]:
+# Create spending bins and ranges
+spending_bins = [0, 585, 615, 645, 675]
+spending_ranges = ["<585", "585-615", "615-645", "645-675"]
+
+# Adding "Spending Ranges (Per Student)" to "school_smry" table
+school_smry["Spending Ranges (Per Student)"] = pd.cut(per_student_budget, spending_bins, labels = spending_ranges)
+
+# Calculation
+spending_math_score = school_smry.groupby(["Spending Ranges (Per Student)"]).mean()['Average Math Score']
+spending_reading_score = school_smry.groupby(["Spending Ranges (Per Student)"]).mean()['Average Reading Score']
+spending_passing_math =  school_smry.groupby(["Spending Ranges (Per Student)"]).mean()['% Passing Math']
+spending_passing_reading =  school_smry.groupby(["Spending Ranges (Per Student)"]).mean()['% Passing Reading']
+overall_passing_rate =  (spending_math_score + Spending_reading_score) / 2
+
+# Create Scores by School Spending table
+scores_by_school_spending = pd.DataFrame({"Average Math Score":spending_math_score, "Average Reading Score":Spending_reading_score,
+                               "% Passing Math":spending_passing_math,"% Passing Reading":spending_passing_reading,
+                                    "Overall Passing Rate":overall_passing_rate}) 
+
+# Data munging
+scores_by_school_spending = scores_by_schoole_spending[["Average Math Score", "Average Reading Score",
+                               "% Passing Math","% Passing Reading","Overall Passing Rate"]]
+
+# Display the data frame
+scores_by_school_spending.head()
+Out[86]:
+Average Math Score	Average Reading Score	% Passing Math	% Passing Reading	Overall Passing Rate
+Spending Ranges (Per Student)					
+<585	83.455399	83.933814	100.000000	100.0	83.694607
+585-615	83.599686	83.885211	100.000000	100.0	83.742449
+615-645	79.079225	81.891436	91.257336	100.0	80.485330
+645-675	76.997210	81.027843	86.663727	100.0	79.012526
+Scores By School Size
+In [90]:
+# Create spending bins and ranges
+size_bins = [0, 1000, 2000, 5000]
+size_ranges = ["Small (<1000)", "Medium (1000-2000)", "Large (2000-5000)"]
+
+# Adding "Spending Ranges (Per Student)" to "school_smry" table
+school_smry["School Size"] = pd.cut(school_smry["Total Students"], size_bins, labels = size_ranges)
+
+# Calculation
+avg_math_score  = school_smry.groupby(["School Size"]).mean()['Average Math Score']
+avg_reading_score  = school_smry.groupby(["School Size"]).mean()['Average Reading Score']
+percent_passing_math =  school_smry.groupby(["School Size"]).mean()['% Passing Math']
+percent_passing_reading =  school_smry.groupby(["School Size"]).mean()['% Passing Reading']
+overall_passing_rate =  school_smry.groupby(["School Size"]).mean()['Overall Passing Rate']
+
+# Create Scores by School Spending table
+scores_by_school_size = pd.DataFrame({"Average Math Score":avg_math_score, "Average Reading Score":avg_reading_score,
+                               "% Passing Math":percent_passing_math,"% Passing Reading":percent_passing_reading,
+                                    "Overall Passing Rate":overall_passing_rate}) 
+
+# Data munging
+scores_by_school_size = scores_by_school_size[["Average Math Score", "Average Reading Score",
+                               "% Passing Math","% Passing Reading","Overall Passing Rate"]]
+
+# Display the data frame
+scores_by_school_size.head()
+Out[90]:
+Average Math Score	Average Reading Score	% Passing Math	% Passing Reading	Overall Passing Rate
+School Size					
+Small (<1000)	83.821598	83.929843	100.0000	100.0	100.00000
+Medium (1000-2000)	83.374684	83.864438	100.0000	100.0	100.00000
+Large (2000-5000)	77.746417	81.344493	88.4419	100.0	94.22095
+Scores By School Type
+In [91]:
+# Calculation
+avg_math_score  = school_smry.groupby(["School Type"]).mean()['Average Math Score']
+avg_reading_score  = school_smry.groupby(["School Type"]).mean()['Average Reading Score']
+percent_passing_math =  school_smry.groupby(["School Type"]).mean()['% Passing Math']
+percent_passing_reading =  school_smry.groupby(["School Type"]).mean()['% Passing Reading']
+overall_passing_rate =  school_smry.groupby(["School Type"]).mean()['Overall Passing Rate']
+
+# Create Scores by School Spending table
+scores_by_school_type = pd.DataFrame({"Average Math Score":avg_math_score, "Average Reading Score":avg_reading_score,
+                               "% Passing Math":percent_passing_math,"% Passing Reading":percent_passing_reading,
+                                    "Overall Passing Rate":overall_passing_rate}) 
+
+# Data munging
+scores_by_school_type = scores_by_school_type[["Average Math Score", "Average Reading Score",
+                               "% Passing Math","% Passing Reading","Overall Passing Rate"]]
+
+# Display the data frame
+scores_by_school_type.head()
+Out[91]:
+Average Math Score	Average Reading Score	% Passing Math	% Passing Reading	Overall Passing Rate
+School Type					
+Charter	83.473852	83.896421	100.000000	100.0	100.000000
+District	76.956733	80.966636	86.790742	100.0	93.395371

@@ -32,4 +32,5 @@ Helping the  school board and mayor make strategic decisions regarding future sc
 ## Technology Used
 
 -   Python
+-   SQL
 -   Tableau

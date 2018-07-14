@@ -35,4 +35,4 @@ Helping the  school board and mayor make strategic decisions regarding future sc
 
 <img src="https://raw.githubusercontent.com/david880110/tech-logo/master/sqlite%20logo.png" width="210" height="80"/>
 
-<img src="https://raw.githubusercontent.com/david880110/tech-logo/master/tableau%20logo.png" width="220" height="80"/>
+<img src="https://raw.githubusercontent.com/david880110/tech-logo/master/tableau%20logo.png" width="240" height="60"/>

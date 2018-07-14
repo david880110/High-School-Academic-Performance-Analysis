@@ -12,6 +12,24 @@ Helping the  school board and mayor make strategic decisions regarding future sc
 
 ## Findings 
 
+### (1) District Summary
+
+### (2) School Summary
+
+### (3) Top Performing Schools (By Passing Rate)
+
+### (4) Top Performing Schools (By Passing Rate)
+
+### (5) Math Scores by Grade
+
+### (6) Reading Scores by Grade
+
+### (7) Scores by School Spending
+
+### (8) cores by School Size
+
+### (9) Scores by School Type
+
 ## Technology Used
 
 -   Python

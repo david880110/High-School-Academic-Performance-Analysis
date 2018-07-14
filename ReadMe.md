@@ -25,7 +25,7 @@ Helping the  school board and mayor make strategic decisions regarding future sc
 
 ### (7) Scores by School Spending
 
-### (8) cores by School Size
+### (8) Scores by School Size
 
 ### (9) Scores by School Type
 

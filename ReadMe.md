@@ -10,8 +10,6 @@
 
 Helping the  school board and mayor make strategic decisions regarding future school budgets and priorities
 
-## Data Source
-
 ## Findings 
 
 ## Technology Used

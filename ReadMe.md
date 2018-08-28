@@ -13,7 +13,7 @@ Helping the  school board and mayor make strategic decisions regarding future sc
 
 ### (1) District Summary
 
-'''-code
+'
 SELECT 
 
 count(DISTINCT(school_id)) as Total_Schools,
@@ -55,7 +55,7 @@ case when reading_score > 70 then 1
 end as readingover70
 from 
 students_table));
-'''
+'
 
 ### (2) School Summary
 

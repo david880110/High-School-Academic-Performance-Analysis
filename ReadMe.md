@@ -32,8 +32,8 @@ on a.school_name = b.school_name
 
 join
 (select
-cast(sum(mathover70) as float)/cast(count(mathover70) as float) as Math_Passing_Rate
-from(
+ cast(sum(mathover70) as float)/cast(count(mathover70) as float) as Math_Passing_Rate
+ from(    
 select
  student_id
  ,math_score
@@ -45,7 +45,7 @@ students_table))
 
 join
 (select
-cast(sum(readingover70) as float)/cast(count(readingover70) as float) as Reading_Passing_Rate
+cast(sum(readingover70) as float)/cast(count(readingover70) as float) as Reading_Passing_Rate 
 from(
 select
 student_id ,reading_score, 

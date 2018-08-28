@@ -13,7 +13,7 @@ Helping the  school board and mayor make strategic decisions regarding future sc
 
 ### (1) District Summary
 
-'''
+'''-code
 SELECT 
 
 count(DISTINCT(school_id)) as Total_Schools,

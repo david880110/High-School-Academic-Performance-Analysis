@@ -13,6 +13,11 @@ Helping the  school board and mayor make strategic decisions regarding future sc
 
 ## Findings 
 
+![alt text](https://raw.githubusercontent.com/david880110/High-School-Academic-Performance-Analysis/master/image/Summary.png)
+
+![alt text](https://raw.githubusercontent.com/david880110/High-School-Academic-Performance-Analysis/master/image/Detail.png)
+
+
 ### (1) District Summary
 
 ```sql

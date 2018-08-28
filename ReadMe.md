@@ -13,6 +13,49 @@ Helping the  school board and mayor make strategic decisions regarding future sc
 
 ### (1) District Summary
 
+```sqlite
+SELECT 
+
+count(DISTINCT(school_id)) as Total_Schools,
+count(student_id) as Total_Students,
+sum(budget) as Total_Budget,
+avg(math_score) as Average_Math_Score,
+avg(reading_score) as Average_Reading_Score,
+math_passing_rate,
+reading_passing_rate,
+(math_passing_rate + reading_passing_rate)/2 as Overall_Passing_Rate
+
+FROM schools_table a
+
+inner join  students_table b
+on a.school_name = b.school_name
+
+join
+(select
+cast(sum(mathover70) as float)/cast(count(mathover70) as float) as Math_Passing_Rate
+from(
+select
+ student_id
+ ,math_score
+ , case when math_score > 70 then 1
+		else 0
+end as mathover70
+from 
+students_table))
+
+join
+(select
+cast(sum(readingover70) as float)/cast(count(readingover70) as float) as Reading_Passing_Rate
+from(
+select
+student_id ,reading_score, 
+case when reading_score > 70 then 1
+		else 0
+end as readingover70
+from 
+students_table));
+```
+
 '''sql
 SELECT 
 count(DISTINCT(school_id)) as Total_Schools,

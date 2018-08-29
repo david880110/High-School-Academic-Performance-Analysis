@@ -9,6 +9,7 @@
   • <a href="#syntax-detail">Syntax Detail</a>
   • <a href="#technology-Used">Technology Used</a>
 </p>
+
 A analysis helping parents to pick the best school based on a 28,000+ data sets, in the aspects of:
 
 * Academic performance, 

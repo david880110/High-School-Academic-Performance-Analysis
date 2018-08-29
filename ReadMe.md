@@ -66,9 +66,9 @@ from
 students_table));
 ```
 
-| Total_Schools | Total_Students | Total_Budget | Average_Math_Score | Average_Reading_Score | Math_Passing_Rate | Reading_Passing_Rate | Overall_Passing_Rate |   |
-|:-------------:|:--------------:|:------------:|:------------------:|:---------------------:|:-----------------:|:--------------------:|:--------------------:|:-:|
-|       11      |      27712     |   5.77E+10   |       82.1648      |        82.19028       |      0.836894     |       0.751876       |       0.794385       |   |
+| Total_Schools | Total_Students | Total_Budget | Average_Math_Score | Average_Reading_Score | Math_Passing_Rate | Reading_Passing_Rate | Overall_Passing_Rate |
+|:-------------:|:--------------:|:------------:|:------------------:|:---------------------:|:-----------------:|:--------------------:|:--------------------:|
+|       11      |      27712     |  57663546353 |       82.1648      |        82.19028       |      0.836894     |       0.751876       |       0.794385       |
 
 ### (2) School Summary
 

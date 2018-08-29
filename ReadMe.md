@@ -63,27 +63,9 @@ from
 students_table));
 ```
 
-<style type="text/css">
-	table.tableizer-table {
-		font-size: 12px;
-		border: 1px solid #CCC; 
-		font-family: Arial, Helvetica, sans-serif;
-	} 
-	.tableizer-table td {
-		padding: 4px;
-		margin: 3px;
-		border: 1px solid #CCC;
-	}
-	.tableizer-table th {
-		background-color: #104E8B; 
-		color: #FFF;
-		font-weight: bold;
-	}
-</style>
-<table class="tableizer-table">
-<thead><tr class="tableizer-firstrow"><th>Total_Schools</th><th>Total_Students</th><th>Total_Budget</th><th>Average_Math_Score</th><th>Average_Reading_Score</th><th>Math_Passing_Rate</th><th>Reading_Passing_Rate</th><th>Overall_Passing_Rate</th></tr></thead><tbody>
- <tr><td>11</td><td>27712</td><td>57663546353</td><td>82.16480225</td><td>82.19027858</td><td>0.836893764</td><td>0.751876443</td><td>0.794385104</td></tr>
-</tbody></table>
+| Total_Schools | Total_Students | Total_Budget | Average_Math_Score | Average_Reading_Score | Math_Passing_Rate | Reading_Passing_Rate | Overall_Passing_Rate |
+|:-------------:|:--------------:|:------------:|:------------------:|-----------------------|-------------------|----------------------|----------------------|
+|       11      |      27712     |   5.77E+10   |       82.1648      | 82.19028              | 0.836894          | 0.751876             | 0.794385             |
 
 ### (2) School Summary
 

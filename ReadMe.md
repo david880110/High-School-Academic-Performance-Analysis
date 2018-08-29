@@ -9,8 +9,19 @@
   • <a href="#syntax-detail">Syntax Detail</a>
   • <a href="#technology-Used">Technology Used</a>
 </p>
+A analysis helping parents to pick the best school based on a 28,000+ data sets, in the aspects of:
 
-Helping the  school board and mayor make strategic decisions regarding future school budgets and priorities
+* Academic performance, 
+
+* Educational spending, 
+
+* Specific school, 
+
+* School type, 
+
+* School size,
+
+* Math and Reading score in detail
 
 ## Findings 
 
@@ -20,7 +31,7 @@ Helping the  school board and mayor make strategic decisions regarding future sc
 
 ![alt text](https://raw.githubusercontent.com/david880110/High-School-Academic-Performance-Analysis/master/image/Detail.png)
 
-2. **In terms of Math and Reading, all Charter Schools beat  District Schools in academic performance;** All **<u>District Schools</u>** generate **<u>poor reading score** and **<u>Stewart High has the best performance</u>**** among all schools regardless the school type
+2. **In terms of Math and Reading, all Charter Schools beat  District Schools in academic performance;** All **<u>District Schools</u>** generate <u>**poor reading score**</u> and **<u>Stewart High has the best performance</u>** among all schools regardless the school type
 
 
 ![alt text](https://raw.githubusercontent.com/david880110/High-School-Academic-Performance-Analysis/master/image/99_Student.png)

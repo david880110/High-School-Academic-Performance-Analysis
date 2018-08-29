@@ -17,6 +17,7 @@ Helping the  school board and mayor make strategic decisions regarding future sc
 
 ![alt text](https://raw.githubusercontent.com/david880110/High-School-Academic-Performance-Analysis/master/image/Detail.png)
 
+![alt text](https://raw.githubusercontent.com/david880110/High-School-Academic-Performance-Analysis/master/image/99 Student.png)
 
 ## Detail
 

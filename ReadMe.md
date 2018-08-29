@@ -18,6 +18,8 @@ Helping the  school board and mayor make strategic decisions regarding future sc
 ![alt text](https://raw.githubusercontent.com/david880110/High-School-Academic-Performance-Analysis/master/image/Detail.png)
 
 
+## Detail
+
 ### (1) District Summary
 
 ```sql
@@ -122,8 +124,19 @@ order by Per_Student_Budget
 ;
 ```
 
-
-
+|      School_name      | School_Type | Total_Budget | Total_Student | Per_Student_Budget | Average_Math_Score | Average_Reading_Score | Average_Overall_Score | Overall_Passing_Rate |
+|:---------------------:|:-----------:|:------------:|:-------------:|--------------------|--------------------|-----------------------|-----------------------|----------------------|
+|    Long High School   |   Charter   |   2.32E+08   |      628      | 368636             | 83.06847           | 93.81051              | 88.43949              | 89%                  |
+| Hood High School      | Charter     | 5.38E+08     | 930           | 578460             | 83.57419           | 94.07742              | 88.82581              | 89%                  |
+| Stewart High School   | Charter     | 8.95E+08     | 1208          | 740504             | 83.77401           | 94.12003              | 88.94702              | 91%                  |
+| Thompson High School  | Charter     | 1.13E+09     | 1353          | 838860             | 83.51589           | 94.1153               | 88.81559              | 91%                  |
+| Floyd High School     | Charter     | 2.58E+09     | 2104          | 1224528            | 83.02804           | 93.96625              | 88.49715              | 90%                  |
+| Vargas High School    | Charter     | 3.9E+09      | 2479          | 1574165            | 83.57644           | 93.96168              | 88.76906              | 90%                  |
+| Webb High School      | District    | 5.97E+09     | 3074          | 1942768            | 81.41542           | 76.55823              | 78.98682              | 49%                  |
+| Farmer High School    | District    | 7.67E+09     | 3429          | 2235708            | 81.59405           | 77.0175               | 79.30577              | 52%                  |
+| Lopez High School     | District    | 7.71E+09     | 3428          | 2248768            | 81.72579           | 76.87515              | 79.30047              | 51%                  |
+| Patterson High School | District    | 1.27E+10     | 4389          | 2887962            | 81.48143           | 76.64457              | 79.063                | 50%                  |
+| Greene High School    | District    | 1.44E+10     | 4690          | 3062570            | 81.69552           | 76.80746              | 79.25149              | 51%                  |
 
 
 ### (3) Top Performing Schools (By Passing Rate)
@@ -179,7 +192,13 @@ limit 5
 ;
 ```
 
-
+|      School_name      | School_type | Total_Budget | Per_Student_Budget | Average_Math_Score | Average_Reading_Score | Average_Overall_Score | Overall_Passing_Rate |   |
+|:---------------------:|:-----------:|:------------:|:------------------:|--------------------|-----------------------|-----------------------|----------------------|---|
+|    Webb High School   |   District  |   5.97E+09   |       1942768      | 81.41542           | 76.55823              | 78.98682              | 49%                  |   |
+| Patterson High School | District    | 1.27E+10     | 2887962            | 81.48143           | 76.64457              | 79.063                | 50%                  |   |
+| Greene High School    | District    | 1.44E+10     | 3062570            | 81.69552           | 76.80746              | 79.25149              | 51%                  |   |
+| Lopez High School     | District    | 7.71E+09     | 2248768            | 81.72579           | 76.87515              | 79.30047              | 51%                  |   |
+| Farmer High School    | District    | 7.67E+09     | 2235708            | 81.59405           | 77.0175               | 79.30577              | 52%                  |   |
 
 ### (4) Math Scores by Grade
 
@@ -245,7 +264,19 @@ using (school_name)
 ;
 ```
 
-
+|      school_name      |    9th   |   10th   |   11th   | 12th     |
+|:---------------------:|:--------:|:--------:|:--------:|----------|
+|   Farmer High School  |  82.0167 | 81.55696 | 81.43085 | 81.30319 |
+| Floyd High School     | 83.21698 | 82.91197 | 82.98643 | 83.00204 |
+| Greene High School    | 81.61424 | 80.94024 | 82.14902 | 82.29346 |
+| Hood High School      | 84.63291 | 83.25413 | 83.77723 | 82.53723 |
+| Long High School      | 83.76316 | 81.97006 | 84.05263 | 82.61146 |
+| Lopez High School     | 82.01149 | 81.55498 | 81.52406 | 81.7915  |
+| Patterson High School | 81.15685 | 81.79703 | 81.57627 | 81.37435 |
+| Stewart High School   | 83.75    | 84.24013 | 83.34661 | 83.68512 |
+| Thompson High School  | 83.37709 | 83.13279 | 83.83113 | 83.81173 |
+| Vargas High School    | 83.81392 | 83.08791 | 83.39641 | 84.06803 |
+| Webb High School      | 81.05882 | 81.46844 | 81.34925 | 81.85479 |
 
 ### (5) Reading Scores by Grade
 
@@ -311,7 +342,19 @@ using (school_name)
 ;
 ```
 
-
+|      school_name      |    9th   |   10th   |   11th   | 12th     |
+|:---------------------:|:--------:|:--------:|:--------:|----------|
+|   Farmer High School  | 77.70045 | 76.52093 | 76.55319 | 77.34441 |
+| Floyd High School     | 93.93396 | 93.85915 | 93.95543 | 94.13673 |
+| Greene High School    | 77.11894 | 76.89561 | 76.50882 | 76.61121 |
+| Hood High School      | 94.32068 | 94.09901 | 94.10891 | 93.70213 |
+| Long High School      | 93.78947 | 93.53293 | 94.03289 | 93.91083 |
+| Lopez High School     | 76.58098 | 77.6444  | 77.69701 | 75.36763 |
+| Patterson High School | 76.66058 | 76.14598 | 76.82097 | 77.11679 |
+| Stewart High School   | 94.18681 | 94.17105 | 93.89641 | 94.17647 |
+| Thompson High School  | 94.13687 | 94.25203 | 93.93046 | 94.10802 |
+| Vargas High School    | 93.92284 | 93.94368 | 94.00996 | 93.98639 |
+| Webb High School      | 76.16567 | 76.70653 | 77.19851 | 76.20509 |
 
 ### (6) Scores by School Spending
 
@@ -454,7 +497,11 @@ where Per_Student_Budget > 2000000
 ;
 ```
 
-
+|   Spending_Ranges_Per_Student   | Average_Math_Score | Average_Reading_Score | Average_Overall_Score | Overall_Passing_Rate |
+|:-------------------------------:|:------------------:|:---------------------:|:---------------------:|----------------------|
+| Between $1,000,000 - $2,000,000 |       82.6733      |        88.16205       |        85.41768       | 76.33333             |
+| Greater than $2,000,000         | 81.6242            | 76.83617              | 79.23018              | 51                   |
+| Less than $1,000,000            | 83.48314           | 94.03082              | 88.75698              | 90                   |
 
 ### (7) Scores by School Size
 
@@ -600,7 +647,11 @@ where Total_Student > 2000
 ;
 ```
 
-
+|     School_Size    | Average_Math_Score | Average_Reading_Score | Average_Overall_Score | Overall_Passing_Rate |
+|:------------------:|:------------------:|:---------------------:|:---------------------:|----------------------|
+|  Large (2000-5000) |      82.07381      |        81.69012       |        81.88197       | 61.85714             |
+| Medium (1000-2000) | 83.64495           | 94.11767              | 88.88131              | 91                   |
+| Small (<1000)      | 83.32133           | 93.94396              | 88.63265              | 89                   |
 
 ### (8) Scores by School Type
 
@@ -699,7 +750,10 @@ where School_Type = 'District'
 ;
 ```
 
-
+| School_Type | Average_Math_Score | Average_Reading_Score | Average_Overall_Score | Overall_Passing_Rate |
+|:-----------:|:------------------:|:---------------------:|:---------------------:|----------------------|
+|   Charter   |      83.42284      |        94.00853       |        88.71569       | 90                   |
+| District    | 81.58244           | 76.78058              | 79.18151              | 50.6                 |
 
 ## Technology Used
 

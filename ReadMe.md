@@ -37,32 +37,32 @@ reading_passing_rate,
 
 FROM schools_table a
 
-inner join  students_table b
+INNER JOIN  students_table b
 on a.school_name = b.school_name
 
-join
-(select
- cast(sum(mathover70) as float)/cast(count(mathover70) as float) as Math_Passing_Rate
- from(    
-select
+JOIN
+(SELECT
+ CAST(sum(mathover70) as float)/CAST(count(mathover70) as float) as Math_Passing_Rate
+ FROM(    
+SELECT
  student_id
  ,math_score
  , case when math_score > 70 then 1
 		else 0
 end as mathover70
-from 
+FROM 
 students_table))
 
-join
-(select
-cast(sum(readingover70) as float)/cast(count(readingover70) as float) as Reading_Passing_Rate 
-from(
-select
+JOIN
+(SELECT
+CAST(sum(readingover70) as float)/CAST(count(readingover70) as float) as Reading_Passing_Rate 
+FROM(
+SELECT
 student_id ,reading_score, 
 case when reading_score > 70 then 1
 		else 0
 end as readingover70
-from 
+FROM 
 students_table));
 ```
 
@@ -85,7 +85,7 @@ c.Average_Reading_Score,
 c.Average_Overall_Score,
 (pass_count*100 / all_count) ||'%' as Overall_Passing_Rate
 
-from 
+FROM 
 
 (SELECT count(b.student_name) as all_count,
 a.School_name,
@@ -99,29 +99,29 @@ avg(reading_score) as Average_Reading_Score,
 
 FROM schools_table a
 
-inner join  students_table b
+INNER JOIN  students_table b
 on a.school_name = b.school_name
 
-group by a.School_name) c
+GROUP BY a.School_name) c
 
-join 
+JOIN 
 
 (SELECT count(b.student_name) as pass_count,
 a.School_name
 
 FROM schools_table a
-inner join  students_table b
+INNER JOIN  students_table b
 on a.school_name = b.school_name
 
-where reading_score > 70
+WHERE reading_score > 70
 and math_score > 70
 
-group by a.School_name
-order by a.School_name) d
+GROUP BY a.School_name
+ORDER BY a.School_name) d
 
 using (School_name)
-group by School_name
-order by Per_Student_Budget
+GROUP BY School_name
+ORDER BY Per_Student_Budget
 ;
 ```
 
@@ -153,7 +153,7 @@ c.Average_Reading_Score,
 c.Average_Overall_Score,
 (pass_count*100 / all_count) ||'%' as Overall_Passing_Rate
 
-from 
+FROM 
 
 (SELECT count(b.student_name) as all_count,
 a.School_name,
@@ -165,29 +165,29 @@ avg(reading_score) as Average_Reading_Score,
 (avg(math_score) + avg(reading_score))/2 as Average_Overall_Score
 
 FROM schools_table a
-inner join  students_table b
+INNER JOIN  students_table b
 on a.school_name = b.school_name
 
-group by a.School_name) c
+GROUP BY a.School_name) c
 
-join 
+JOIN 
 
 (SELECT count(b.student_name) as pass_count,
 a.School_name
 
 FROM schools_table a
-inner join  students_table b
+INNER JOIN  students_table b
 on a.school_name = b.school_name
 
-where reading_score > 70
+WHERE reading_score > 70
 and math_score > 70
 
-group by a.School_name
-order by a.School_name) d
+GROUP BY a.School_name
+ORDER BY a.School_name) d
 
 using (School_name)
-group by School_name
-order by c.Average_Overall_Score
+GROUP BY School_name
+ORDER BY c.Average_Overall_Score
 limit 5
 ;
 ```
@@ -203,63 +203,63 @@ limit 5
 ### (4) Math Scores by Grade
 
 ```sql
-select 
+SELECT 
 
 *
 
-from 
+FROM 
 
 (SELECT 
 school_name,
 avg(math_score) as '9th'
-from 
+FROM 
 schools_table a
-join
+JOIN
 students_table b
 using (school_name)
-where grade = '9th'
-group by school_name) c
+WHERE grade = '9th'
+GROUP BY school_name) c
 
-join 
+JOIN 
 
 (SELECT 
 school_name,
 avg(math_score) as '10th'
-from 
+FROM 
 schools_table a
-join
+JOIN
 students_table b
 using (school_name)
-where grade = '10th'
-group by school_name)
+WHERE grade = '10th'
+GROUP BY school_name)
 using (school_name)
 
-join 
+JOIN 
 
 (SELECT 
 school_name,
 avg(math_score) as '11th'
-from 
+FROM 
 schools_table a
-join
+JOIN
 students_table b
 using (school_name)
-where grade = '11th'
-group by school_name)
+WHERE grade = '11th'
+GROUP BY school_name)
 using (school_name)
 
-join 
+JOIN 
 
 (SELECT 
 school_name,
 avg(math_score) as '12th'
-from 
+FROM 
 schools_table a
-join
+JOIN
 students_table b
 using (school_name)
-where grade = '12th'
-group by school_name)
+WHERE grade = '12th'
+GROUP BY school_name)
 using (school_name)
 ;
 ```
@@ -281,63 +281,63 @@ using (school_name)
 ### (5) Reading Scores by Grade
 
 ```sql
-select 
+SELECT 
 
 *
 
-from 
+FROM 
 
 (SELECT 
 school_name,
 avg(reading_score) as '9th'
-from 
+FROM 
 schools_table a
-join
+JOIN
 students_table b
 using (school_name)
-where grade = '9th'
-group by school_name) c
+WHERE grade = '9th'
+GROUP BY school_name) c
 
-join 
+JOIN 
 
 (SELECT 
 school_name,
 avg(reading_score) as '10th'
-from 
+FROM 
 schools_table a
-join
+JOIN
 students_table b
 using (school_name)
-where grade = '10th'
-group by school_name)
+WHERE grade = '10th'
+GROUP BY school_name)
 using (school_name)
 
-join 
+JOIN 
 
 (SELECT 
 school_name,
 avg(reading_score) as '11th'
-from 
+FROM 
 schools_table a
-join
+JOIN
 students_table b
 using (school_name)
-where grade = '11th'
-group by school_name)
+WHERE grade = '11th'
+GROUP BY school_name)
 using (school_name)
 
-join 
+JOIN 
 
 (SELECT 
 school_name,
 avg(reading_score) as '12th'
-from 
+FROM 
 schools_table a
-join
+JOIN
 students_table b
 using (school_name)
-where grade = '12th'
-group by school_name)
+WHERE grade = '12th'
+GROUP BY school_name)
 using (school_name)
 ;
 ```
@@ -367,7 +367,7 @@ avg(c.Average_Reading_Score) as Average_Reading_Score,
 avg(c.Average_Overall_Score) as Average_Overall_Score,
 avg((pass_count*100 / all_count) ||'%') as Overall_Passing_Rate
 
-from 
+FROM 
 
 (SELECT count(b.student_name) as all_count,
 a.School_name,
@@ -379,29 +379,29 @@ avg(reading_score) as Average_Reading_Score,
 (avg(math_score) + avg(reading_score))/2 as Average_Overall_Score
 
 FROM schools_table a
-inner join  students_table b
+INNER JOIN  students_table b
 on a.school_name = b.school_name
 
-group by a.School_name) c
+GROUP BY a.School_name) c
 
-join 
+JOIN 
 
 (SELECT count(b.student_name) as pass_count,
 a.School_name
 
 FROM schools_table a
-inner join  students_table b
+INNER JOIN  students_table b
 on a.school_name = b.school_name
 
-where reading_score > 70
+WHERE reading_score > 70
 and math_score > 70
 
-group by a.School_name
-order by a.School_name) d
+GROUP BY a.School_name
+ORDER BY a.School_name) d
 
 using (School_name)
 
-where Per_Student_Budget < 1000000
+WHERE Per_Student_Budget < 1000000
 
 union
 
@@ -413,7 +413,7 @@ avg(c.Average_Reading_Score) as Average_Reading_Score,
 avg(c.Average_Overall_Score) as Average_Overall_Score,
 avg((pass_count*100 / all_count) ||'%') as Overall_Passing_Rate
 
-from 
+FROM 
 
 (SELECT count(b.student_name) as all_count,
 a.School_name,
@@ -425,29 +425,29 @@ avg(reading_score) as Average_Reading_Score,
 (avg(math_score) + avg(reading_score))/2 as Average_Overall_Score
 
 FROM schools_table a
-inner join  students_table b
+INNER JOIN  students_table b
 on a.school_name = b.school_name
 
-group by a.School_name) c
+GROUP BY a.School_name) c
 
-join 
+JOIN 
 
 (SELECT count(b.student_name) as pass_count,
 a.School_name
 
 FROM schools_table a
-inner join  students_table b
+INNER JOIN  students_table b
 on a.school_name = b.school_name
 
-where reading_score > 70
+WHERE reading_score > 70
 and math_score > 70
 
-group by a.School_name
-order by a.School_name) d
+GROUP BY a.School_name
+ORDER BY a.School_name) d
 
 using (School_name)
 
-where Per_Student_Budget between 1000000 and 2000000
+WHERE Per_Student_Budget between 1000000 and 2000000
 
 union
 
@@ -459,7 +459,7 @@ avg(c.Average_Reading_Score) as Average_Reading_Score,
 avg(c.Average_Overall_Score) as Average_Overall_Score,
 avg((pass_count*100 / all_count) ||'%') as Overall_Passing_Rate
 
-from 
+FROM 
 
 (SELECT count(b.student_name) as all_count,
 a.School_name,
@@ -471,29 +471,29 @@ avg(reading_score) as Average_Reading_Score,
 (avg(math_score) + avg(reading_score))/2 as Average_Overall_Score
 
 FROM schools_table a
-inner join  students_table b
+INNER JOIN  students_table b
 on a.school_name = b.school_name
 
-group by a.School_name) c
+GROUP BY a.School_name) c
 
-join 
+JOIN 
 
 (SELECT count(b.student_name) as pass_count,
 a.School_name
 
 FROM schools_table a
-inner join  students_table b
+INNER JOIN  students_table b
 on a.school_name = b.school_name
 
-where reading_score > 70
+WHERE reading_score > 70
 and math_score > 70
 
-group by a.School_name
-order by a.School_name) d
+GROUP BY a.School_name
+ORDER BY a.School_name) d
 
 using (School_name)
 
-where Per_Student_Budget > 2000000
+WHERE Per_Student_Budget > 2000000
 ;
 ```
 
@@ -514,7 +514,7 @@ avg(c.Average_Reading_Score) as Average_Reading_Score,
 avg(c.Average_Overall_Score) as Average_Overall_Score,
 avg((pass_count*100 / all_count) ||'%') as Overall_Passing_Rate
 
-from 
+FROM 
 
 (SELECT count(b.student_name) as all_count,
 a.School_name,
@@ -527,29 +527,29 @@ avg(reading_score) as Average_Reading_Score,
 (avg(math_score) + avg(reading_score))/2 as Average_Overall_Score
 
 FROM schools_table a
-inner join  students_table b
+INNER JOIN  students_table b
 on a.school_name = b.school_name
 
-group by a.School_name) c
+GROUP BY a.School_name) c
 
-join 
+JOIN 
 
 (SELECT count(b.student_name) as pass_count,
 a.School_name
 
 FROM schools_table a
-inner join  students_table b
+INNER JOIN  students_table b
 on a.school_name = b.school_name
 
-where reading_score > 70
+WHERE reading_score > 70
 and math_score > 70
 
-group by a.School_name
-order by a.School_name) d
+GROUP BY a.School_name
+ORDER BY a.School_name) d
 
 using (School_name)
 
-where Total_Student < 1000
+WHERE Total_Student < 1000
 
 union
 
@@ -561,7 +561,7 @@ avg(c.Average_Reading_Score) as Average_Reading_Score,
 avg(c.Average_Overall_Score) as Average_Overall_Score,
 avg((pass_count*100 / all_count) ||'%') as Overall_Passing_Rate
 
-from 
+FROM 
 
 (SELECT count(b.student_name) as all_count,
 a.School_name,
@@ -574,29 +574,29 @@ avg(reading_score) as Average_Reading_Score,
 (avg(math_score) + avg(reading_score))/2 as Average_Overall_Score
 
 FROM schools_table a
-inner join  students_table b
+INNER JOIN  students_table b
 on a.school_name = b.school_name
 
-group by a.School_name) c
+GROUP BY a.School_name) c
 
-join 
+JOIN 
 
 (SELECT count(b.student_name) as pass_count,
 a.School_name
 
 FROM schools_table a
-inner join  students_table b
+INNER JOIN  students_table b
 on a.school_name = b.school_name
 
-where reading_score > 70
+WHERE reading_score > 70
 and math_score > 70
 
-group by a.School_name
-order by a.School_name) d
+GROUP BY a.School_name
+ORDER BY a.School_name) d
 
 using (School_name)
 
-where Total_Student between 1000 and 2000
+WHERE Total_Student between 1000 and 2000
 
 union
 
@@ -608,7 +608,7 @@ avg(c.Average_Reading_Score) as Average_Reading_Score,
 avg(c.Average_Overall_Score) as Average_Overall_Score,
 avg((pass_count*100 / all_count) ||'%') as Overall_Passing_Rate
 
-from 
+FROM 
 
 (SELECT count(b.student_name) as all_count,
 a.School_name,
@@ -621,29 +621,29 @@ avg(reading_score) as Average_Reading_Score,
 (avg(math_score) + avg(reading_score))/2 as Average_Overall_Score
 
 FROM schools_table a
-inner join  students_table b
+INNER JOIN  students_table b
 on a.school_name = b.school_name
 
-group by a.School_name) c
+GROUP BY a.School_name) c
 
-join 
+JOIN 
 
 (SELECT count(b.student_name) as pass_count,
 a.School_name
 
 FROM schools_table a
-inner join  students_table b
+INNER JOIN  students_table b
 on a.school_name = b.school_name
 
-where reading_score > 70
+WHERE reading_score > 70
 and math_score > 70
 
-group by a.School_name
-order by a.School_name) d
+GROUP BY a.School_name
+ORDER BY a.School_name) d
 
 using (School_name)
 
-where Total_Student > 2000
+WHERE Total_Student > 2000
 ;
 ```
 
@@ -664,7 +664,7 @@ avg(c.Average_Reading_Score) as Average_Reading_Score,
 avg(c.Average_Overall_Score) as Average_Overall_Score,
 avg((pass_count*100 / all_count) ||'%') as Overall_Passing_Rate
 
-from 
+FROM 
 
 (SELECT count(b.student_name) as all_count,
 a.School_name,
@@ -677,29 +677,29 @@ avg(reading_score) as Average_Reading_Score,
 (avg(math_score) + avg(reading_score))/2 as Average_Overall_Score
 
 FROM schools_table a
-inner join  students_table b
+INNER JOIN  students_table b
 on a.school_name = b.school_name
 
-group by a.School_name) c
+GROUP BY a.School_name) c
 
-join 
+JOIN 
 
 (SELECT count(b.student_name) as pass_count,
 a.School_name
 
 FROM schools_table a
-inner join  students_table b
+INNER JOIN  students_table b
 on a.school_name = b.school_name
 
-where reading_score > 70
+WHERE reading_score > 70
 and math_score > 70
 
-group by a.School_name
-order by a.School_name) d
+GROUP BY a.School_name
+ORDER BY a.School_name) d
 
 using (School_name)
 
-where School_Type = 'Charter'
+WHERE School_Type = 'Charter'
 
 union
 
@@ -711,7 +711,7 @@ avg(c.Average_Reading_Score) as Average_Reading_Score,
 avg(c.Average_Overall_Score) as Average_Overall_Score,
 avg((pass_count*100 / all_count) ||'%') as Overall_Passing_Rate
 
-from 
+FROM 
 
 (SELECT count(b.student_name) as all_count,
 a.School_name,
@@ -724,29 +724,29 @@ avg(reading_score) as Average_Reading_Score,
 (avg(math_score) + avg(reading_score))/2 as Average_Overall_Score
 
 FROM schools_table a
-inner join  students_table b
+INNER JOIN  students_table b
 on a.school_name = b.school_name
 
-group by a.School_name) c
+GROUP BY a.School_name) c
 
-join 
+JOIN 
 
 (SELECT count(b.student_name) as pass_count,
 a.School_name
 
 FROM schools_table a
-inner join  students_table b
+INNER JOIN  students_table b
 on a.school_name = b.school_name
 
-where reading_score > 70
+WHERE reading_score > 70
 and math_score > 70
 
-group by a.School_name
-order by a.School_name) d
+GROUP BY a.School_name
+ORDER BY a.School_name) d
 
 using (School_name)
 
-where School_Type = 'District'
+WHERE School_Type = 'District'
 ;
 ```
 
